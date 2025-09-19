@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -8,32 +9,50 @@
 <body>
   <h1>Digital Life Lab</h1>
   <div id="container">
-    <div id="editor">
+    <!-- Linke Spalte: Editor -->
+    <section id="editor">
       <h2>Programm</h2>
-      <select id="demoSelect" onchange="loadDemo(this.value)">
-        <option value="hello">Hello</option>
-        <option value="worm">Wurm</option>
-      </select>
-      <textarea id="codeArea" rows="15" cols="30"></textarea><br>
-      <button onclick="assembleAndLoad()">Assemble & Load</button>
-    </div>
-    <div id="cpuview">
-      <h2>CPU & Speicher</h2>
+      <label>Demo:
+        <select id="demoSelect" onchange="loadDemo(this.value)">
+          <option value="hello">Hello</option>
+          <option value="worm">Wurm</option>
+        </select>
+      </label>
+      <textarea id="codeArea" spellcheck="false"></textarea>
+      <div class="row">
+        <button onclick="assembleAndLoad()">Assemble & Load</button>
+        <button onclick="downloadBytes()">Download .bin</button>
+      </div>
+    </section>
+
+    <!-- Mitte: CPU-Ansicht (getrennt) -->
+    <section id="cpuPane">
+      <h2>CPU</h2>
       <div id="controls">
         <button onclick="step()">Step</button>
         <button onclick="run()">Run</button>
         <button onclick="stop()">Stop</button>
         <button onclick="reset()">Reset</button>
       </div>
-      <div id="status">
-        <div id="registers"></div>
+      <div id="registers"></div>
+      <div id="disasm"></div>
+    </section>
+
+    <!-- Rechte Spalte: Speicheransichten (Tabs) -->
+    <section id="memoryPane">
+      <h2>Speicher</h2>
+      <div class="tabs">
+        <button class="tab active" data-target="gridView" onclick="switchTab(event)">Grid</button>
+        <button class="tab" data-target="hexView" onclick="switchTab(event)">Hex/ASCII</button>
       </div>
-      <canvas id="memoryCanvas" width="512" height="256"></canvas>
-    </div>
+      <canvas id="gridView" width="512" height="256"></canvas>
+      <pre id="hexView" class="hidden"></pre>
+    </section>
   </div>
 
   <script src="cpu.js"></script>
   <script src="assembler.js"></script>
+  <script src="disasm.js"></script>
   <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
