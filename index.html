@@ -3,19 +3,21 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Digital Life Lab</title>
+  <title>Digital Life Lab – x86‑lite</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Digital Life Lab</h1>
+  <h1>Digital Life Lab – x86‑lite</h1>
   <div id="container">
-    <!-- Linke Spalte: Editor -->
+    <!-- Editor -->
     <section id="editor">
       <h2>Programm</h2>
       <label>Demo:
         <select id="demoSelect" onchange="loadDemo(this.value)">
           <option value="hello">Hello</option>
           <option value="worm">Wurm</option>
+          <option value="fib">Fibonacci (Überraschung)</option>
         </select>
       </label>
       <textarea id="codeArea" spellcheck="false"></textarea>
@@ -25,7 +27,7 @@
       </div>
     </section>
 
-    <!-- Mitte: CPU-Ansicht (getrennt) -->
+    <!-- CPU -->
     <section id="cpuPane">
       <h2>CPU</h2>
       <div id="controls">
@@ -38,14 +40,14 @@
       <div id="disasm"></div>
     </section>
 
-    <!-- Rechte Spalte: Speicheransichten (Tabs) -->
+    <!-- Speicher -->
     <section id="memoryPane">
       <h2>Speicher</h2>
       <div class="tabs">
         <button class="tab active" data-target="gridView" onclick="switchTab(event)">Grid</button>
         <button class="tab" data-target="hexView" onclick="switchTab(event)">Hex/ASCII</button>
       </div>
-      <canvas id="gridView" width="512" height="256"></canvas>
+      <canvas id="gridView" width="640" height="320"></canvas>
       <pre id="hexView" class="hidden"></pre>
     </section>
   </div>
