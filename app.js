@@ -62,11 +62,23 @@ function updateRegs(){
 
 function assembleAndLoad(){
   const code = document.getElementById('codeArea').value;
-  const bytes = assemble(code);
-  cpu.reset();
-  cpu.loadProgram(bytes, 0x0000);
-  renderAll();
-  window._lastBin = bytes;
+  const err = document.getElementById('err');
+  err.style.display = 'none'; err.textContent = '';
+  try {
+    const bytes = assemble(code);
+    if (!bytes || !bytes.length) {
+      err.textContent = 'Assembler hat 0 Bytes erzeugt. Prüfe Syntax oder lade die Seite hart neu (Cache).';
+      err.style.display = 'block';
+      return;
+    }
+    cpu.reset();
+    cpu.loadProgram(bytes, 0x0000);
+    renderAll();
+    window._lastBin = bytes;
+  } catch(e){
+    err.textContent = 'Assembler-Fehler: ' + e.message;
+    err.style.display = 'block';
+  }
 }
 
 function loadDemo(name){
@@ -76,8 +88,23 @@ function loadDemo(name){
 
 function step(){ cpu.step(); renderAll(); }
 function run(){
-  stop(); cpu.running=true;
-  timer = setInterval(()=>{ if(!cpu.step()){ stop(); } renderAll(); }, 100);
+  stop(); cpu.running = true;
+  const maxStepsPerFrame = 200; // throttle to keep UI responsive
+  const loop = () => {
+    if (!cpu.running) return;
+    let steps = 0;
+    let lastEIP = cpu.reg.EIP;
+    while (steps < maxStepsPerFrame) {
+      const before = cpu.reg.EIP;
+      if (!cpu.step()) { stop(); break; }
+      steps++;
+      // primitive hang detection: if EIP did not change for too long, break to redraw
+      if (cpu.reg.EIP === before) { break; }
+    }
+    renderAll();
+    requestAnimationFrame(loop);
+  };
+  requestAnimationFrame(loop);
 }
 function stop(){ if (timer) clearInterval(timer); timer=null; cpu.running=false; }
 function reset(){

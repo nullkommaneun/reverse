@@ -2,12 +2,12 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <title>Digital Life Lab – x86‑lite v4.1</title>
+  <title>Digital Life Lab – x86‑lite v4.2</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css?v=4.1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Digital Life Lab – x86‑lite</h1>
+  <h1>Digital Life Lab – x86‑lite <small style="font-size:12px; color:#8aa;">v4.2</small></h1>
   <div id="container">
     <section id="editor">
       <h2>Programm</h2>
@@ -23,6 +23,7 @@
         <button onclick="assembleAndLoad()">Assemble & Load</button>
         <button onclick="downloadBytes()">Download .bin</button>
       </div>
+      <div id="err" style="display:none; margin-top:8px; color:#ff7070; font-family:monospace;"></div>
     </section>
 
     <section id="cpuPane">
@@ -48,10 +49,10 @@
     </section>
   </div>
 
-  <script src="cpu.js?v=4.1"></script>
-  <script src="assembler.v41.js?v=4.1"></script>
-  <script src="disasm.js?v=4.1"></script>
-  <script src="samples.js?v=4.1"></script>
-  <script src="app.js?v=4.1"></script>
+  <script src="cpu.js"></script>
+  <script src="assembler.js"></script>
+  <script src="disasm.js"></script>
+  <script src="samples.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
