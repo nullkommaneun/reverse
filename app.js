@@ -9,7 +9,7 @@ function drawMemory() {
     const x = (i % 32) * w;
     const y = Math.floor(i / 32) * h;
     const val = cpu.mem[i];
-    ctx.fillStyle = `rgb(${val},${val},${val})`;
+    ctx.fillStyle = val === 0 ? '#000' : `hsl(${val},100%,50%)`;
     ctx.fillRect(x, y, w, h);
   }
 }
@@ -19,11 +19,18 @@ function updateRegisters() {
     `A=${cpu.reg.A} B=${cpu.reg.B} PC=${cpu.reg.PC} FLAGS=${cpu.reg.FLAGS} CYCLES=${cpu.cycles}`;
 }
 
-function loadProgram(name) {
+function assembleAndLoad() {
+  const code = document.getElementById('codeArea').value;
+  const bytes = assemble(code);
   cpu.reset();
-  cpu.loadProgram(Programs[name], 0);
+  cpu.loadProgram(bytes, 0);
   drawMemory();
   updateRegisters();
+}
+
+function loadDemo(name) {
+  document.getElementById('codeArea').value = DemoCodes[name];
+  assembleAndLoad();
 }
 
 function step() {
@@ -39,7 +46,7 @@ function run() {
     cpu.step();
     drawMemory();
     updateRegisters();
-  }, 100);
+  }, 150);
 }
 
 function stop() {
@@ -53,4 +60,4 @@ function reset() {
   updateRegisters();
 }
 
-reset();
+loadDemo('hello');

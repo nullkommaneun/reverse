@@ -7,22 +7,33 @@
 </head>
 <body>
   <h1>Digital Life Lab</h1>
-  <div id="controls">
-    <button onclick="loadProgram('hello')">Hello</button>
-    <button onclick="loadProgram('worm')">Wurm</button>
-    <button onclick="step()">Step</button>
-    <button onclick="run()">Run</button>
-    <button onclick="stop()">Stop</button>
-    <button onclick="reset()">Reset</button>
+  <div id="container">
+    <div id="editor">
+      <h2>Programm</h2>
+      <select id="demoSelect" onchange="loadDemo(this.value)">
+        <option value="hello">Hello</option>
+        <option value="worm">Wurm</option>
+      </select>
+      <textarea id="codeArea" rows="15" cols="30"></textarea><br>
+      <button onclick="assembleAndLoad()">Assemble & Load</button>
+    </div>
+    <div id="cpuview">
+      <h2>CPU & Speicher</h2>
+      <div id="controls">
+        <button onclick="step()">Step</button>
+        <button onclick="run()">Run</button>
+        <button onclick="stop()">Stop</button>
+        <button onclick="reset()">Reset</button>
+      </div>
+      <div id="status">
+        <div id="registers"></div>
+      </div>
+      <canvas id="memoryCanvas" width="512" height="256"></canvas>
+    </div>
   </div>
-
-  <div id="status">
-    <div id="registers"></div>
-  </div>
-
-  <canvas id="memoryCanvas" width="512" height="256"></canvas>
 
   <script src="cpu.js"></script>
+  <script src="assembler.js"></script>
   <script src="samples.js"></script>
   <script src="app.js"></script>
 </body>
