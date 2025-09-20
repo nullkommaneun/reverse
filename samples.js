@@ -1,4 +1,3 @@
-
 const DemoCodes = {
   hello: `MOV EAX, #72
 MOV [0x0010], EAX
